@@ -1,13 +1,10 @@
-
 import asyncio
-from typing import List
+from time import time
 
-wait_random = __import__('0-basic_async_syntax').wait_random
+wait_n = __import__('Task-1').wait_n
 
-async def wait_n(n: int, max_delay: int )-> List[float]:
-    create = [asyncio.create_task(wait_random(max_delay)) 
-                        for i in range(n) ]
-    completed_task = []
-    for task in asyncio.as_completed(create):
-        completed_task.append(await task)
-    return (completed_task)   
+async def measure_time(n: int, max_delay: int) -> float:
+    start_time = time()
+    asyncio.run(wait_n(n, max_delay))
+    total_time = time() - start_time
+    return(total_time/n)
